@@ -275,7 +275,7 @@ function Calculate() {
           <h3>Estimated Total Dowry: ₹{result.total.toLocaleString('en-IN')}</h3>
           
           <div className="breakdown">
-            <h4>Detailed Breakdown:</h4>
+            <h4>You Deserve :</h4>
             <table>
               <tbody>
                 {result.breakdown.map((item, index) => (

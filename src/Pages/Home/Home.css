@@ -18,7 +18,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url("../../assets/dowry-awareness.jpg");
+  background-image: url("../../assets/image1.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -54,8 +54,8 @@
 
 .hero-section h1 {
   color: #7f1d1d;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+  font-size: 4rem;
+  margin-bottom: 15px;
   font-weight: 700;
 }
 
@@ -121,7 +121,7 @@
 
 @media (max-width: 480px) {
   .home-container::before {
-    opacity: 0.15; /* More transparent on small screens */
+    opacity: 1; /* More transparent on small screens */
   }
 
   .content-wrapper {

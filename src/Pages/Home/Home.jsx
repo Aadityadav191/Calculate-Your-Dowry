@@ -25,9 +25,9 @@ export default function Home() {
                 transition={{ duration: 1 }}
               >
                 {" "}
-                Calculate Your Dowry
+                Calculate Your Daijo
               </motion.h1>
-              <p>Calculate to understand, not to promote.</p>
+              <p>A groom like you deserves the best !</p>
               <Btn onClick={handleNavigate} />
             </div>
 
