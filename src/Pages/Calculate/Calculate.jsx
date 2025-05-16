@@ -292,8 +292,8 @@ function Calculate() {
 
       {/* Legal Disclaimer */}
       <div className="disclaimer">
-        <p>⚠️ <strong>Legal Notice:</strong> Dowry is illegal in India under the Dowry Prohibition Act, 1961. 
-        This calculator is for educational purposes only to demonstrate the absurdity of dowry practices.</p>
+        <p>⚠️ <strong>Legal Notice:</strong> Dowry is illegal in Nepal under the Dowry Prohibition Act, 1961. 
+        This calculator is for Fun purposes only to demonstrate the absurdity of dowry practices.</p>
       </div>
     </div>
   );
