@@ -1,0 +1,181 @@
+/* Calculator.css */
+.dowry-calculator {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.dowry-calculator h2 {
+  color: #7f1d1d;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+.calculator-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group select,
+.form-group input[type="number"],
+.form-group input[type="range"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.land-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.land-input-group input {
+  flex: 2;
+}
+
+.land-input-group select {
+  flex: 1;
+}
+
+.form-group input[type="range"] {
+  padding: 0;
+  margin-top: 8px;
+}
+
+.checkboxes div {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.checkboxes input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.calculate-btn {
+  grid-column: span 2;
+  padding: 14px;
+  background-color: #7f1d1d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.calculate-btn:hover {
+  background-color: #9f1239;
+  transform: translateY(-2px);
+}
+
+.results {
+  background-color: #fee2e2;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+}
+
+.results h3 {
+  color: #7f1d1d;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.breakdown {
+  background-color: white;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.breakdown h4 {
+  margin-top: 0;
+  color: #7f1d1d;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.breakdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.breakdown tr {
+  border-bottom: 1px dashed #eee;
+}
+
+.breakdown td {
+  padding: 10px 0;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #555;
+  width: 60%;
+}
+
+.item-value {
+  font-weight: 700;
+  color: #7f1d1d;
+  text-align: right;
+}
+
+.disclaimer {
+  background-color: #fef2f2;
+  border-left: 4px solid #dc2626;
+  padding: 15px;
+  font-size: 14px;
+  color: #7f1d1d;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .calculator-form {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .calculate-btn {
+    grid-column: span 1;
+  }
+  
+  .dowry-calculator {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .land-input-group {
+    flex-direction: column;
+  }
+}
