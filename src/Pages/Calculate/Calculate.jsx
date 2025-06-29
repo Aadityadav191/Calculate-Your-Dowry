@@ -8,11 +8,13 @@ function Calculate() {
     education: 'bachelors',
     location: 'metro',
     familyStatus: 'middleClass',
+    salaryRange: '5-10',
     gold: 50,
     cash: 0,
     landOwned: 0,
-    landLocation: 'village', // Default land location
-    hasCar: false,
+    landLocation: 'village',
+    hasTwoWheeler: false,
+    hasFourWheeler: false,
     hasFurniture: false
   });
 
@@ -21,13 +23,13 @@ function Calculate() {
 
   // Calculation function
   const calculateDowry = () => {
-    // Base amounts by profession (in INR)
     const professionBase = {
       doctor: 1000000,
       engineer: 700000,
       lawyer: 800000,
       business: 1200000,
-      other: 500000
+      govtJob: 1500000,
+      other: 300000
     };
 
     // Education multipliers
@@ -54,52 +56,71 @@ function Calculate() {
       lowerMiddle: 0.7
     };
 
-    // Land value per bigha based on location (in INR)
-    const landValuePerBigha = {
-      metro: 5000000,   // Metro city land value
-      city: 3000000,    // City land value
-      town: 1000000,    // Town land value
-      village: 500000   // Village land value
+    // Salary multipliers based on range
+    const salaryMultiplier = {
+      '1-3': 0.8,
+      '3-5': 1.0,
+      '5-10': 1.2,
+      '10-20': 1.5,
+      '20+': 2.0
     };
 
+    // Land value per bigha based on location (in INR)
+    const landValuePerBigha = {
+      metro: 5000000,
+      city: 3000000,
+      town: 1000000,
+      village: 500000
+    };
+
+    // Vehicle values
+    const twoWheelerValue = 100000; 
+    const fourWheelerValue = 500000; 
+    const furnitureValue = 200000;
+
     // Calculate components
-    const baseAmount = professionBase[inputs.profession] || 500000;
+    const baseAmount = professionBase[inputs.profession] || 50000;
     const educationFactor = educationMultiplier[inputs.education] || 1.0;
     const locationFactor = locationMultiplier[inputs.location] || 1.0;
     const familyFactor = familyStatusMultiplier[inputs.familyStatus] || 1.0;
+    const salaryFactor = salaryMultiplier[inputs.salaryRange] || 1.0;
     
-    const goldValue = inputs.gold * 5500; // Current gold rate approx
+    const goldValue = inputs.gold * 5500;
     const cashValue = Number(inputs.cash) || 0;
     const landValue = inputs.landOwned * landValuePerBigha[inputs.landLocation];
-    const carValue = inputs.hasCar ? 500000 : 0;
-    const furnitureValue = inputs.hasFurniture ? 200000 : 0;
+    const twoWheelerValueTotal = inputs.hasTwoWheeler ? twoWheelerValue : 0;
+    const fourWheelerValueTotal = inputs.hasFourWheeler ? fourWheelerValue : 0;
+    const furnitureValueTotal = inputs.hasFurniture ? furnitureValue : 0;
 
     // Calculate total
     const total = Math.round(
-      (baseAmount * educationFactor * locationFactor * familyFactor) + 
+      (baseAmount * educationFactor * locationFactor * familyFactor * salaryFactor) + 
       goldValue + 
       cashValue + 
       landValue +
-      carValue + 
-      furnitureValue
+      twoWheelerValueTotal + 
+      fourWheelerValueTotal + 
+      furnitureValueTotal
     );
 
     // Set the result
     setResult({
-      base: Math.round(baseAmount * educationFactor * locationFactor * familyFactor),
+      base: Math.round(baseAmount * educationFactor * locationFactor * familyFactor * salaryFactor),
       gold: goldValue,
       cash: cashValue,
       land: landValue,
-      car: carValue,
-      furniture: furnitureValue,
+      twoWheeler: twoWheelerValueTotal,
+      fourWheeler: fourWheelerValueTotal,
+      furniture: furnitureValueTotal,
       total: total,
       breakdown: [
-        { name: "Base Amount", value: Math.round(baseAmount * educationFactor * locationFactor * familyFactor) },
+        { name: "Minimun Amount", value: Math.round(baseAmount * educationFactor * locationFactor * familyFactor * salaryFactor) },
         { name: "Gold", value: goldValue },
         { name: "Cash", value: cashValue },
         ...(landValue > 0 ? [{ name: `Land (${inputs.landOwned} Bigha - ${inputs.landLocation})`, value: landValue }] : []),
-        ...(carValue > 0 ? [{ name: "Car", value: carValue }] : []),
-        ...(furnitureValue > 0 ? [{ name: "Furniture", value: furnitureValue }] : [])
+        ...(twoWheelerValueTotal > 0 ? [{ name: "Two Wheeler", value: twoWheelerValueTotal }] : []),
+        ...(fourWheelerValueTotal > 0 ? [{ name: "Four Wheeler", value: fourWheelerValueTotal }] : []),
+        ...(furnitureValueTotal > 0 ? [{ name: "Furniture", value: furnitureValueTotal }] : [])
       ]
     });
   };
@@ -118,9 +139,7 @@ function Calculate() {
       <h2>Dowry Calculator</h2>
       
       <div className="calculator-form">
-        {/* Personal Details Column */}
         <div className="form-column">
-          {/* Profession Selection */}
           <div className="form-group">
             <label>Profession:</label>
             <select 
@@ -132,6 +151,7 @@ function Calculate() {
               <option value="engineer">Engineer</option>
               <option value="lawyer">Lawyer</option>
               <option value="business">Business</option>
+              <option value="govtJob">Government Job</option>
               <option value="other">Other</option>
             </select>
           </div>
@@ -148,6 +168,22 @@ function Calculate() {
               <option value="masters">Master's</option>
               <option value="bachelors">Bachelor's</option>
               <option value="diploma">Diploma</option>
+            </select>
+          </div>
+
+          {/* Salary Range */}
+          <div className="form-group">
+            <label>Salary Range (Lakhs/Year):</label>
+            <select 
+              name="salaryRange" 
+              value={inputs.salaryRange}
+              onChange={handleChange}
+            >
+              <option value="1-3">1-3 Lakhs</option>
+              <option value="3-5">3-5 Lakhs</option>
+              <option value="5-10">5-10 Lakhs</option>
+              <option value="10-20">10-20 Lakhs</option>
+              <option value="20+">20+ Lakhs</option>
             </select>
           </div>
 
@@ -240,12 +276,22 @@ function Calculate() {
             <div>
               <input
                 type="checkbox"
-                id="hasCar"
-                name="hasCar"
-                checked={inputs.hasCar}
+                id="hasTwoWheeler"
+                name="hasTwoWheeler"
+                checked={inputs.hasTwoWheeler}
                 onChange={handleChange}
               />
-              <label htmlFor="hasCar">Car (₹5,00,000)</label>
+              <label htmlFor="hasTwoWheeler">Two Wheeler</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="hasFourWheeler"
+                name="hasFourWheeler"
+                checked={inputs.hasFourWheeler}
+                onChange={handleChange}
+              />
+              <label htmlFor="hasFourWheeler">Four Wheeler</label>
             </div>
             <div>
               <input
@@ -255,7 +301,7 @@ function Calculate() {
                 checked={inputs.hasFurniture}
                 onChange={handleChange}
               />
-              <label htmlFor="hasFurniture">Furniture (₹2,00,000)</label>
+              <label htmlFor="hasFurniture">Furniture</label>
             </div>
           </div>
         </div>
